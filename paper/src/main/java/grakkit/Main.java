@@ -44,7 +44,7 @@ public class Main extends JavaPlugin {
       
       pluginInstance = this;
 
-      SyncCallUtil.mainThread = Thread.currentThread();
+      SyncCallHelper.mainThread = Thread.currentThread();
    }
 
    @Override

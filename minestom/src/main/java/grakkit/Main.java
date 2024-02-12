@@ -12,6 +12,7 @@ public class Main extends Extension {
    @Override
 
    public LoadStatus initialize() {
+      SyncCallHelper.mainThread = Thread.currentThread();
       Grakkit.patch(new Loader(this.getClass().getClassLoader())); // CORE - patch class loader with GraalJS
       schedulerManager.buildTask(() -> {
          schedulerManager.buildTask(() -> {
