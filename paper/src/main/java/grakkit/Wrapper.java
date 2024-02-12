@@ -22,6 +22,8 @@ public class Wrapper extends Command implements PluginIdentifiableCommand {
    /** The tab-completer to use for this command. */
    public Value tabCompleter;
 
+   public SyncCallHelper syncCallHelper = null;
+
    /** Creates a custom command with the given options. */
    public Wrapper (String name, String[] aliases) {
       super(name, "", "", Arrays.asList(aliases));
@@ -30,7 +32,13 @@ public class Wrapper extends Command implements PluginIdentifiableCommand {
    @Override
    public boolean execute (CommandSender sender, String label, String[] args) {
       try {
-         this.executor.executeVoid(sender, label, args);
+         if (syncCallHelper != null){
+            syncCallHelper.call(() -> {
+               this.executor.executeVoid(sender, label, args);
+            });
+         } else {
+            this.executor.executeVoid(sender, label, args);
+         }
       } catch (Throwable error) {
          // do nothing
       }
@@ -49,7 +57,14 @@ public class Wrapper extends Command implements PluginIdentifiableCommand {
    public ArrayList<String> tabComplete (CommandSender sender, String alias, String[] args) {
       ArrayList<String> output = new ArrayList<>();
       try {
-         Value input = this.tabCompleter.execute(sender, alias, args);
+         Value input = null;
+         if (syncCallHelper != null){
+            syncCallHelper.call(() -> {
+               input = this.tabCompleter.execute(sender, alias, args);
+            });
+         } else {
+            input = this.tabCompleter.execute(sender, alias, args);
+         }
          for (long index = 0; index < input.getArraySize(); index++) output.add(input.getArrayElement(index).toString());
       } catch (Throwable error) {
          // do nothing
