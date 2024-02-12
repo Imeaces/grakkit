@@ -13,7 +13,11 @@ public class SyncEventExecutor implements EventExecutor {
    private SyncCallHelper helper;
    public void execute(Listener listener, Event event){
       helper.call(() -> {
-         executor.execute(listener, event);
-      } throws Throwable);
+         try {
+            executor.execute(listener, event);
+         } catch(Throwable e){
+            throw e;
+         }
+      });
    }
 }
