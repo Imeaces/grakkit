@@ -5,10 +5,16 @@ import java.util.Arrays;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginIdentifiableCommand;
+import org.bukkit.plugin.Plugin;
 
 import org.graalvm.polyglot.Value;
 
-public class Wrapper extends Command {
+public class Wrapper extends Command implements PluginIdentifiableCommand {
+
+   Plugin getPlugin(){
+      return Main.pluginInstance;
+   }
 
    /** The executor to use for this command. */
    public Value executor;

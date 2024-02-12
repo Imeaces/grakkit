@@ -11,10 +11,13 @@ import java.util.function.Consumer;
 import org.bukkit.command.CommandMap;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
 import org.graalvm.polyglot.Value;
 
 public class Main extends JavaPlugin {
+
+   protected static Plugin pluginInstance = null;
 
    /** A list of all registered commands. */
    public static HashMap<String, Wrapper> commands = new HashMap<>();
@@ -39,6 +42,8 @@ public class Main extends JavaPlugin {
          error.printStackTrace();
       }
       
+      pluginInstance = this;
+
       SyncCallUtil.mainThread = Thread.currentThread();
    }
 
@@ -71,6 +76,7 @@ public class Main extends JavaPlugin {
          command.tabCompleter = Value.asValue((Runnable) () -> {});
       });
       commands.clear();
+      pluginInstance = null;
    }
 
    /** Registers a custom command to the server with the given options. */
