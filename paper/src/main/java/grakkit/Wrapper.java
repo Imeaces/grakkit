@@ -53,6 +53,12 @@ public class Wrapper extends Command implements PluginIdentifiableCommand {
       this.setPermissionMessage(message);
    }
 
+   /**
+    * this variable aiming to receive return value from
+    * sync tab complete inside the lambda Runnable
+    *
+    * you known, Java isn't JavaScript
+    */
    private Value tabCompleteInput;
 
    @Override
