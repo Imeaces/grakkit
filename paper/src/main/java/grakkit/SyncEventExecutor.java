@@ -14,6 +14,6 @@ public class SyncEventExecutor implements EventExecutor {
    public void execute(Listener listener, Event event){
       helper.call(() -> {
          executor.execute(listener, event);
-      });
+      } throws Throwable);
    }
 }
