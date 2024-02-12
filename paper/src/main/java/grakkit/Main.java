@@ -23,10 +23,10 @@ public class Main extends JavaPlugin {
    public static HashMap<String, Wrapper> commands = new HashMap<>();
 
    /** The internal command map used to register commands. */
-   public static final CommandMap registry;
+   public static CommandMap registry;
 
    /** Internal consumer for onDisable */
-   public static final List<Consumer<Void>> onDisableCallbacks = new LinkedList<>(); 
+   private static final List<Consumer<Void>> onDisableCallbacks = new LinkedList<>(); 
 
    @Override
    public void onLoad() {

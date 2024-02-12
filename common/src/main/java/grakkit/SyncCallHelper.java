@@ -26,7 +26,7 @@ public class SyncCallHelper {
          call(fn);
       };
    }
-   protected synchronized void call(Runnable fn){
+   public synchronized void call(Runnable fn){
       fn.run();
    }
 }

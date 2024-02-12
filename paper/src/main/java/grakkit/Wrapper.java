@@ -12,7 +12,7 @@ import org.graalvm.polyglot.Value;
 
 public class Wrapper extends Command implements PluginIdentifiableCommand {
 
-   Plugin getPlugin(){
+   public Plugin getPlugin(){
       return Main.pluginInstance;
    }
 
