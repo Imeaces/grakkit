@@ -53,18 +53,21 @@ public class Wrapper extends Command implements PluginIdentifiableCommand {
       this.setPermissionMessage(message);
    }
 
+   private Value tabCompleteInput;
+
    @Override
    public ArrayList<String> tabComplete (CommandSender sender, String alias, String[] args) {
       ArrayList<String> output = new ArrayList<>();
       try {
-         Value input = null;
+         tabCompleteInput = null;
          if (syncCallHelper != null){
             syncCallHelper.call(() -> {
-               input = this.tabCompleter.execute(sender, alias, args);
+               tabCompleteInput = this.tabCompleter.execute(sender, alias, args);
             });
          } else {
-            input = this.tabCompleter.execute(sender, alias, args);
+            tabCompleteInput = this.tabCompleter.execute(sender, alias, args);
          }
+         Value input = tabCompleteInput;
          for (long index = 0; index < input.getArraySize(); index++) output.add(input.getArrayElement(index).toString());
       } catch (Throwable error) {
          // do nothing
