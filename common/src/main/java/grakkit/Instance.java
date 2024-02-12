@@ -35,6 +35,7 @@ public class Instance {
    public Instance (String root, String meta) {
       this.meta = meta;
       this.root = root;
+      this.api = new GrakkitAPI(this);
    }
 
    /** Closes this instance's context. */
@@ -55,6 +56,8 @@ public class Instance {
       // do nothing
    }
 
+   private GrakkitAPI api;
+
    /** Opens this instance's context. */
    public void open () {
       this.context = Context.newBuilder("js")
@@ -66,7 +69,8 @@ public class Instance {
          .option("js.ecmascript-version", "2022")
          .option("js.commonjs-require-cwd", this.root)
          .build();
-      this.context.getBindings("js").putMember("Grakkit", Value.asValue(new GrakkitAPI(this)));
+      this.context.getBindings("js").putMember("Grakkit", Value.asValue(this.api));
+      this.context.getBindings("js").putMember("SyncCallHelper", Value.asValue(this.api.SyncCallHelper));
       try {
          this.execute();
       } catch (Throwable error) {

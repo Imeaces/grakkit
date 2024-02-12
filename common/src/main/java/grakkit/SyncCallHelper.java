@@ -2,7 +2,7 @@ package grakkit;
 
 import java.util.function.*;
 
-public class SyncCallUtil {
+public class SyncCallHelper {
    protected static Thread mainThread = null;
    public static boolean currentThreadIsMainThread(){
       return Thread.currentThread().equals(mainThread);
@@ -10,23 +10,23 @@ public class SyncCallUtil {
    public BiConsumer<Object, Object> createSyncBiConsumer(BiConsumer<Object, Object> fn){
       return (a, b) -> {
          call(() -> {
-            fn(a, b);
+            fn.accept(a, b);
          });
       };
    }
    public Consumer<Object> createSyncConsumer(Consumer<Object> fn){
       return (value) -> {
          call(() -> {
-            fn(value);
+            fn.accept(value);
          });
       };
    }
    public Runnable createSyncRunnable(Runnable fn){
       return () -> {
          call(fn);
-      }
+      };
    }
-   private static synchronized call(Runnable){
+   protected synchronized void call(Runnable fn){
       fn.run();
    }
 }

@@ -17,7 +17,7 @@ public class GrakkitAPI {
    /**
     * just a util to make developer can escape async problem
     */
-   public SyncCallUtil SyncCallUtil = new SyncCallUtil();
+   public SyncCallHelper SyncCallHelper = new SyncCallHelper();
 
    /** The underlying instance to which this API is linked. */
    private Instance instance;
