@@ -16,7 +16,7 @@ public class SyncEventExecutor implements EventExecutor {
          try {
             executor.execute(listener, event);
          } catch(Throwable e){
-            throw e;
+            throw new RuntimeException(e);
          }
       });
    }
